@@ -1,30 +1,41 @@
-export const scoringFunction = (guess: string, answer: string) => {
-  let answerLetters: string[] = [];
-  answerLetters = answer.split("");
+type CheckTypes = "correct" | "present" | "absent" | "";
 
-  let checks: string[] = ["", "", "", "", ""];
+export const scoringFunction = (guess: string, answer: string) => {
+  const normalizeString = (string: string) => {
+    return string.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "");
+  };
+
+  const normalizedGuess = normalizeString(guess);
+  const normalizedAnswer = normalizeString(answer);
+
+  if (normalizedGuess.length !== normalizedAnswer.length) {
+    throw new Error(`The word must be ${normalizedAnswer.length} letters long`);
+  }
+
+  const answerLetters = normalizedAnswer.split("");
+
+  const checks: CheckTypes[] = Array(normalizedAnswer.length).fill("");
 
   // Green checks have to run fully first to "use" up all of the individual letters, in case of duplicates for example
-  for (let i = 0; i < guess.length; i++) {
-    if (answerLetters[i] === guess[i]) {
-      checks[i] = "🟩";
+  for (let i = 0; i < normalizedGuess.length; i++) {
+    if (answerLetters[i] === normalizedGuess[i]) {
+      checks[i] = "correct";
       answerLetters[i] = "";
     }
   }
 
-  for (let i = 0; i < guess.length; i++) {
-    if (checks[i] === "🟩") {
+  for (let i = 0; i < normalizedGuess.length; i++) {
+    if (checks[i] === "correct") {
       continue;
     }
 
-    let indexOf = answerLetters.indexOf(guess[i]);
+    const indexOf = answerLetters.indexOf(normalizedGuess[i]);
     if (indexOf !== -1) {
-      checks[i] = "🟨";
+      checks[i] = "present";
       answerLetters[indexOf] = "";
     } else {
-      checks[i] = "⬜";
+      checks[i] = "absent";
     }
   }
-
-  return checks.join("");
+  return checks;
 };

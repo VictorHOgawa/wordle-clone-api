@@ -1,5 +1,13 @@
 {
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc",
+    "format": "prettier --write ."
+  },
   "devDependencies": {
-    "ts-node": "^10.9.2"
+    "@types/node": "^22.20.5",
+    "prettier": "^3.9.10",
+    "typescript": "^7.0.2"
   }
 }

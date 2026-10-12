@@ -5,17 +5,17 @@ import { scoringFunction } from "../scoring.ts";
 //⬜🟨🟩
 
 test("The function should return ⬜🟩🟩🟨🟩", () => {
-  assert.strictEqual(scoringFunction("trace", "crane"), "⬜🟩🟩🟨🟩")
-})
+  assert.strictEqual(scoringFunction("trace", "crane"), "⬜🟩🟩🟨🟩");
+});
 
 test("The function should return 🟨⬜🟩⬜🟩", () => {
-  assert.strictEqual(scoringFunction("bobby", "abbey"), "🟨⬜🟩⬜🟩")
-})
+  assert.strictEqual(scoringFunction("bobby", "abbey"), "🟨⬜🟩⬜🟩");
+});
 
 test("The function should return ⬜⬜🟨⬜🟩", () => {
-  assert.strictEqual(scoringFunction("eerie", "crane"), "⬜⬜🟨⬜🟩")
-})
+  assert.strictEqual(scoringFunction("eerie", "crane"), "⬜⬜🟨⬜🟩");
+});
 
 test("The function should return ⬜⬜🟨⬜⬜", () => {
-  assert.strictEqual(scoringFunction("burns", "treat"), "⬜⬜🟨⬜⬜")
-})
+  assert.strictEqual(scoringFunction("burns", "treat"), "⬜⬜🟨⬜⬜");
+});

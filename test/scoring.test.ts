@@ -75,9 +75,8 @@ describe("scoring", () => {
   });
 
   test("Checks for thrown errors", () => {
-    assert.throws(
-      () => scoringFunction("test", "tests"),
-      "The guess is a different size as the answer",
-    );
+    assert.throws(() => scoringFunction("test", "tests"), {
+      message: "The word must be 5 letters long",
+    });
   });
 });

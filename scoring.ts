@@ -1,35 +1,28 @@
-export const scoringFunction = (word: string) => {
-  const goalWord = "bbbbb";
-  const goalWordLetters = goalWord.split('');
+export const scoringFunction = (guess: string, answer: string) => {
+  let answerLetters: string[] = [];
+  answerLetters = answer.split('')
 
+  let checks: string[] = ["", "", "", "", ""];
 
-  if (typeof (word) !== "string") {
-    return "Please include a valid word.";
-  }
-
-  const localWord = word.normalize("NFKD");
-
-  if (localWord.includes(" ")) {
-    return "No spaces allowed."
-  }
-
-  if (localWord.length !== 5) {
-    return "Only 5 letter words are allowed."
-  }
-
-  let letters: string[] = [];
-  letters = localWord.split('')
-
-  const allLettersValid = letters.map((l) => typeof (l) === "string")
-
-  if (letters.length === 5 && allLettersValid) {
-    if (localWord === goalWord) {
-      return "You guessed the correct word!"
+  // Green checks have to run fully first to "use" up all of the individual letters, in case of duplicates for example
+  for (let i = 0; i < guess.length; i++) {
+    if (answerLetters[i] === guess[i]) {
+      checks[i] = "🟩"
+      answerLetters[i] = "";
     }
-
-    const matchingLetters = goalWordLetters.map((gwl) => letters.flatMap((l) => l === gwl))
-    console.log("matchingLetters: ", matchingLetters[0])
-
-    return "Valid"
   }
+
+  for (let i = 0; i < guess.length; i++) {
+    if (checks[i] === "🟩") { continue }
+
+    let indexOf = answerLetters.indexOf(guess[i]);
+    if (indexOf !== -1) {
+      checks[i] = "🟨"
+      answerLetters[indexOf] = ""
+    } else {
+      checks[i] = "⬜"
+    }
+  }
+
+  return checks.join("")
 }
